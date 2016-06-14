@@ -1,0 +1,51 @@
+---
+- include_vars: ../vars/{{ ansible_distribution }}.yml
+
+- name: Install ParaView prerequisite packages
+  become: yes
+  become_user: root
+  package: name={{ item }} state=present
+  with_items: "{{ packages }}"
+  tags:
+    - paraview
+
+- name: Clone ParaView
+  git:
+    repo=https://github.com/Kitware/ParaView.git
+    version={{paraview_version}}
+    dest={{paraview_path}}/src
+    recursive=yes
+  tags:
+    - paraview
+
+- name: Make ParaView build directory
+  file:
+    dest={{paraview_path}}/build
+    state=directory
+  tags: paraview
+
+- name: Generating initial cache
+  template:
+    src=initial_cache.cmake.j2
+    dest={{paraview_path}}/build/initial_cache.cmake
+  tags: paraview
+
+- name: Configure ParaView build
+  command: cmake -C {{paraview_path}}/build/initial_cache.cmake  {{paraview_path}}/src
+    chdir={{paraview_path}}/build
+  tags:
+    - paraview
+
+- name: Build ParaView
+  command: make -j{{ ansible_processor_cores }}
+    chdir={{paraview_path}}/build
+  tags:
+    - paraview
+
+- name: Install ParaView
+  become: yes
+  become_user: root
+  command: make install
+    chdir={{paraview_path}}/build
+  tags:
+    - paraview

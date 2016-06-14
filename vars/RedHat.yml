@@ -1,0 +1,4 @@
+packages:
+  - mesa-libGL-devel
+  - libXt-devel
+  - libatomic

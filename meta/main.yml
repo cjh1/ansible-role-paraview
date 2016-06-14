@@ -1,0 +1,26 @@
+galaxy_info:
+  author: Kitware, Inc
+  description: Build ParaView
+  company: Kitware, Inc
+  license: Apache
+  min_ansible_version: 1.6
+
+  platforms:
+  - name: Ubuntu
+    versions:
+      - trusty
+  - name: CentOS
+    versions:
+    - 7
+
+  galaxy_tags:
+    - paraview
+
+dependencies:
+  - src: "git+https://github.com/cjh1/ansible-role-cmake"
+    name: cmake
+    version: master
+    cmake_version: v3.5.0
+
+
+

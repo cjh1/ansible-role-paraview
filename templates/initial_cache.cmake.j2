@@ -1,0 +1,4 @@
+set(CMAKE_INSTALL_PREFIX {{paraview_install_prefix}} CACHE PATH "" FORCE)
+{% for opt in paraview_cmake_options -%}
+{{ 'set(%s %s CACHE %s "" FORCE)\n' % (opt.name, opt.value, opt.type) }}
+{%- endfor %}

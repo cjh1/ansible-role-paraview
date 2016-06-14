@@ -1,0 +1,7 @@
+packages:
+  - git
+  - cmake
+  - build-essential
+  - mesa-common-dev
+  - libxt-dev
+  - libgl1-mesa-dev

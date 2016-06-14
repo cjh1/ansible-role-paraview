@@ -1,0 +1,5 @@
+---
+paraview_version: master
+paraview_path: "{{ ansible_user_dir }}/paraview"
+paraview_install_prefix: /opt/paraview
+paraview_cmake_options: []
